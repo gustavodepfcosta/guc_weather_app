@@ -17,7 +17,7 @@ def getting_user_location():
     geoplugin_request = requests.get("http://www.geoplugin.net/json.gp")
 
     if geoplugin_request.status_code != 200:
-        print("Não foi possível obter a sua localização. Por favor, tente novamente mais tarde!")
+        print("It was not possible to obtain your current location. Please, try again later!")
         exit()
     
     else:
@@ -39,7 +39,7 @@ def getting_location_key(latitude, longitude):
     location_key_request = requests.get(http_request)
 
     if location_key_request.status_code != 200:
-        print("Não foi possível definir o código da sua localização. Por favor, tente novamente mais tarde!")
+        print("It was not possible to retrive your location key. Please, try again later!!")
         exit()
 
     else:
@@ -57,19 +57,19 @@ def getting_location_key(latitude, longitude):
     title_printer(" ---- LOCALIZAÇÃO ----")
     time.sleep(0.5)
 
-    print("País", end="")
-    print(f"{country:.>76}")
+    print("Country", end="")
+    print(f"{country:.>73}")
     time.sleep(0.5)
 
-    print("Estado", end="")
-    print(f"{state:.>74}")
+    print("State", end="")
+    print(f"{state:.>75}")
     time.sleep(0.5)
 
-    print("Cidade", end="")
-    print(f"{city:.>74}")
+    print("City", end="")
+    print(f"{city:.>76}")
     time.sleep(0.5)
 
-    print("Região", end="")
+    print("Region", end="")
     print(f"{neighbourhood:.>74}")
     time.sleep(0.5)
 
@@ -85,7 +85,7 @@ def getting_user_weather_1(location_key):
     accu_request = requests.get(http_request)
 
     if accu_request.status_code != 200:
-        print("Não foi possível estabelecer conexão com o servidor de informações metereológicas. Por favor, tente novamente mais tarde!")
+        print("It was not possible to stablish connection with the metherological server. Please, try again later!")
         exit()
 
     else:
@@ -104,18 +104,18 @@ def printing_weather_1(accu_response):
     source = ' -- AccuWeather API Service'
 
     #PRINTING WEATHER INFORMATION --
-    title_printer(" ---- TEMPO AGORA ---- ")
+    title_printer(" ---- WEATHER SOON ---- ")
 
-    print("Temperatura Mínima", end="")
+    print("MINIMAL TEMPERATURE", end="")
     print(f"{min_temperature:.>62}")
     time.sleep(0.5)
 
-    print("Temperatura Máxima", end="")
+    print("MAXIMUM TEMPERATURE", end="")
     print(f"{max_temperature:.>62}")
     time.sleep(0.5)
 
     print("")
-    print("Condições Climáticas:")
+    print("WEATHER CONDITIONS:")
     print(for_what_time)
     print("")
     time.sleep(0.5)
@@ -135,7 +135,7 @@ def getting_user_weather_5days(location_key):
     accu_request_5 = requests.get(http_request)
 
     if accu_request_5.status_code != 200:
-        print("Não foi possível estabelecer conexão com o servidor de informações metereológicas. Por favor, tente novamente mais tarde!")
+        print("It was not possible to stablish connection with the metherological server. Please, try again later!")
         exit()
 
     else:
@@ -147,16 +147,16 @@ def getting_user_weather_5days(location_key):
 def printing_weather_5(accu_response_5):
     """Extractcs the json information provided by the server and prints it nicely"""
 
-    title_printer(" ---- 5 DIAS DE PREVISÃO ---- ")
+    title_printer(" ---- 5 DAYS FORECAST ---- ")
 
     for daily_weather_info in accu_response_5['DailyForecasts']:
         print(daily_weather_info['Date'])
 
-        print("Temperatura Mínima", end="")
+        print("MINIMAL TEMPERATURE", end="")
         print(f"{daily_weather_info['Temperature']['Minimum']['Value']:.>59}", "ºC")
         time.sleep(0.5)
 
-        print("Temperatura Mínima", end="")
+        print("MAXIMUM TEMPERATURE", end="")
         print(f"{daily_weather_info['Temperature']['Maximum']['Value']:.>59}", "ºC")
 
         print(daily_weather_info['Day']['IconPhrase'])
@@ -169,20 +169,16 @@ def printing_weather_5(accu_response_5):
 def search_engine(city_name):
     """returns the location key of the typed city name"""
 
-    splitted = city_name.split()
-    city_name = splitted.join("%20")
-
     API_Key = "zIGuOeUd0aE4O621Gj1KGDc6JiZ3PAGb"
     http_request = f"http://dataservice.accuweather.com/locations/v1/cities/search?apikey={API_Key}&q={city_name}&language=pt-br"
 
     search_request = requests.get(http_request)
 
     if search_request.status_code != 200:
-        print(f"Não foi possível obter informações sobre a cidade {city_name}")
+        print(f"It was not possible to retrive information about {city_name}")
 
     else:
         search_response = search_request.json()
-        print(f"Obtendo informações sobre o clima em {city_name}")
+        print(f"Obtaining information about the weather in {city_name}")
 
-    return search_response['Key']
-
+    return search_response[0]['Key']
