@@ -54,7 +54,7 @@ def getting_location_key(latitude, longitude):
     neighbourhood = location_key_response['LocalizedName']
 
     # PRINTING LOCATION INFORMATION --
-    title_printer(" ---- LOCALIZAÇÃO ----")
+    title_printer(" ---- LOCATION ----")
     time.sleep(0.5)
 
     print("Country", end="")
@@ -115,7 +115,7 @@ def printing_weather_1(accu_response):
     time.sleep(0.5)
 
     print("")
-    print("WEATHER CONDITIONS:")
+    print("MEASUREMENT:")
     print(for_what_time)
     print("")
     time.sleep(0.5)
@@ -146,17 +146,17 @@ def getting_user_weather_5days(location_key):
 
 def printing_weather_5(accu_response_5):
     """Extractcs the json information provided by the server and prints it nicely"""
-
+    
     title_printer(" ---- 5 DAYS FORECAST ---- ")
 
     for daily_weather_info in accu_response_5['DailyForecasts']:
         print(daily_weather_info['Date'])
 
-        print("MINIMAL TEMPERATURE", end="")
+        print("Minimal Temperature", end="")
         print(f"{daily_weather_info['Temperature']['Minimum']['Value']:.>59}", "ºC")
         time.sleep(0.5)
 
-        print("MAXIMUM TEMPERATURE", end="")
+        print("Maximum Temperature", end="")
         print(f"{daily_weather_info['Temperature']['Maximum']['Value']:.>59}", "ºC")
 
         print(daily_weather_info['Day']['IconPhrase'])
@@ -181,4 +181,27 @@ def search_engine(city_name):
         search_response = search_request.json()
         print(f"Obtaining information about the weather in {city_name}")
 
-    return search_response[0]['Key']
+    return search_response[0]
+
+
+def searched_city_info_printer(searched_city_info):
+
+    country = searched_city_info['Country']['LocalizedName']
+    state = searched_city_info['AdministrativeArea']['ID']
+    city = searched_city_info['LocalizedName']
+
+    # PRINTING LOCATION INFORMATION --
+    title_printer(" ---- LOCATION ----")
+    time.sleep(0.5)
+
+    print("Country", end="")
+    print(f"{country:.>73}")
+    time.sleep(0.5)
+
+    print("State", end="")
+    print(f"{state:.>75}")
+    time.sleep(0.5)
+
+    print("City", end="")
+    print(f"{city:.>76}")
+    time.sleep(0.5)
